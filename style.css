@@ -1,0 +1,198 @@
+:root { color-scheme: light; }
+html[data-theme="dark"] { color-scheme: dark; }
+
+:root {
+  --ink: #221d15;
+  --ink-soft: #55492f;
+  --bg: #f1e8d2;
+  --panel: #e8dcba;
+  --line: #cdbd90;
+  --navy: #1c2a45;
+  --navy-text: #101827;
+  --brass: #8a6b28;
+  --rust: #8a3a2c;
+  --card-shadow: 0 1px 0 rgba(33,29,22,0.06), 0 8px 20px -12px rgba(28,42,69,0.3);
+  --toolbar-bg: #e8dcba;
+  --overlay: rgba(20,16,8,0.55);
+}
+
+html[data-theme="dark"] {
+  --ink: #ece3cd;
+  --ink-soft: #c4b795;
+  --bg: #151109;
+  --panel: #221b10;
+  --line: #4a3f28;
+  --navy: #93a9d6;
+  --navy-text: #f1e8d2;
+  --brass: #d9b45f;
+  --rust: #e0836c;
+  --card-shadow: 0 1px 0 rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.6);
+  --toolbar-bg: #221b10;
+  --overlay: rgba(0,0,0,0.72);
+}
+
+* { box-sizing: border-box; }
+html { font-size: 16px; background: var(--bg); height: 100%; }
+body {
+  margin: 0; padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Source Serif 4', Georgia, serif;
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.2s ease, color 0.2s ease;
+  min-height: 100%;
+}
+
+.frame { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+/* ---------- Toolbar ---------- */
+.toolbar {
+  position: sticky; top: 0; z-index: 20;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px;
+  background: var(--toolbar-bg);
+  border-bottom: 1px solid var(--line);
+  padding: 10px 24px;
+  margin: 0 -24px;
+}
+.toolbar-group { display: flex; align-items: center; gap: 6px; }
+.toolbar-label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); margin-right: 4px; }
+.toolbar button {
+  -webkit-appearance: none; appearance: none;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  width: 32px; height: 32px;
+  border: 1px solid var(--line);
+  background-color: var(--bg);
+  color: var(--ink);
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.toolbar button:hover { background-color: var(--panel); }
+.theme-btn { width: auto; padding: 0 12px; gap: 6px; }
+
+/* ---------- Masthead ---------- */
+.masthead { padding: 40px 0 20px; border-bottom: 3px double var(--navy); text-align: center; }
+.eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--rust); margin: 0 0 14px; }
+.wordmark { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: clamp(38px, 7vw, 68px); margin: 0; color: var(--navy-text); letter-spacing: 0.01em; }
+.wordmark span { color: var(--rust); font-style: italic; font-weight: 500; }
+.tagline { max-width: 560px; margin: 14px auto 0; color: var(--ink-soft); font-size: 1.05rem; line-height: 1.5; }
+
+.view-tabs { display: flex; justify-content: center; gap: 10px; margin-top: 22px; }
+.view-tab {
+  -webkit-appearance: none; appearance: none;
+  font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+  border: 1px solid var(--line);
+  background: var(--bg); color: var(--ink-soft);
+  padding: 8px 18px; border-radius: 20px; cursor: pointer;
+}
+.view-tab.active { background: var(--navy); color: var(--bg); border-color: var(--navy); }
+
+/* ---------- Layout ---------- */
+.layout { display: grid; grid-template-columns: 300px 1fr; gap: 32px; padding: 40px 0 60px; align-items: start; }
+@media (max-width: 860px) { .layout { grid-template-columns: 1fr; } }
+
+/* ---------- Picker ---------- */
+.picker-card { background: var(--panel); border: 1px solid var(--line); border-radius: 3px; padding: 22px; position: sticky; top: 62px; }
+.picker-label { display: block; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--navy-text); margin: 16px 0 6px; }
+.picker-label:first-child { margin-top: 0; }
+select {
+  width: 100%; font-family: 'Source Serif 4', serif; font-size: 15px; padding: 10px 12px;
+  border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 2px;
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--navy) 50%), linear-gradient(135deg, var(--navy) 50%, transparent 50%);
+  background-position: calc(100% - 18px) center, calc(100% - 13px) center;
+  background-size: 5px 5px, 5px 5px; background-repeat: no-repeat;
+}
+select:focus, .go-btn:focus, .link-btn:focus, .view-tab:focus { outline: 2px solid var(--rust); outline-offset: 2px; }
+.go-btn {
+  width: 100%; margin-top: 22px; padding: 12px; background: var(--navy); color: var(--bg); border: none;
+  border-radius: 2px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.12em;
+  text-transform: uppercase; cursor: pointer;
+}
+.picker-note { margin-top: 18px; padding: 16px 18px; font-size: 13.5px; line-height: 1.55; color: var(--ink-soft); border-left: 3px solid var(--brass); }
+.picker-note strong { color: var(--ink); }
+
+/* ---------- Reader / empty state ---------- */
+.reader { min-height: 300px; }
+.hidden { display: none !important; }
+.empty-state { text-align: center; padding: 60px 20px; border: 1px dashed var(--line); border-radius: 3px; }
+.empty-mark { font-family: 'Cormorant Garamond', serif; font-size: 44px; color: var(--brass); margin: 0 0 6px; }
+.empty-state h2 { font-family: 'Cormorant Garamond', serif; font-size: 26px; margin: 0 0 10px; color: var(--navy-text); }
+.empty-state p { color: var(--ink-soft); }
+.link-btn { background: none; border: none; padding: 0; font: inherit; color: var(--rust); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+
+/* ---------- Chapter header ---------- */
+.chapter-head { margin-bottom: 30px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+.chapter-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--brass); margin: 0 0 6px; }
+.chapter-title { font-family: 'Cormorant Garamond', serif; font-size: 40px; font-weight: 700; color: var(--navy-text); margin: 0; }
+
+/* ---------- Flowing reading text ---------- */
+.reading-flow { font-size: 1.15rem; line-height: 1.85; color: var(--ink); }
+.v-num {
+  font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 0.68em;
+  color: var(--rust); vertical-align: super; margin-right: 2px; cursor: pointer;
+}
+.v-tap {
+  cursor: pointer; border-radius: 3px; padding: 1px 2px; margin: 0 -2px;
+  transition: background 0.15s ease;
+}
+.v-tap:hover, .v-tap:focus { background: var(--panel); outline: none; }
+.v-tap.has-note { border-bottom: 2px dotted var(--brass); }
+.v-tap.has-commentary::after { content: ""; }
+
+/* ---------- Modal ---------- */
+.modal-backdrop {
+  position: fixed; inset: 0; background: var(--overlay); z-index: 100;
+  display: flex; align-items: flex-end; justify-content: center;
+}
+@media (min-width: 720px) {
+  .modal-backdrop { align-items: center; }
+}
+.modal {
+  background: var(--bg); width: 100%; max-width: 640px; max-height: 88vh; overflow-y: auto;
+  border-radius: 10px 10px 0 0; padding: 26px 24px 30px; position: relative;
+  border: 1px solid var(--line);
+}
+@media (min-width: 720px) { .modal { border-radius: 10px; } }
+.modal-close {
+  position: absolute; top: 14px; right: 14px; width: 32px; height: 32px; border-radius: 50%;
+  border: 1px solid var(--line); background: var(--panel); color: var(--ink); cursor: pointer; font-size: 14px;
+}
+.modal-ref { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 28px; color: var(--navy-text); margin: 0 0 6px; padding-right: 40px; }
+.modal-verse-text { font-style: italic; font-size: 1.05rem; line-height: 1.6; color: var(--ink); margin: 0 0 22px; }
+.modal-section { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line); }
+.modal-section-title { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brass); margin: 0 0 12px; }
+
+.commentary-card { background: var(--panel); border: 1px solid var(--line); border-radius: 2px; padding: 14px 16px; box-shadow: var(--card-shadow); position: relative; margin-bottom: 12px; }
+.commentary-card::before { content: ""; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--navy); }
+.commentary-author { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 17px; color: var(--navy-text); margin: 0 0 2px; }
+.commentary-tradition { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.05em; color: var(--rust); text-transform: uppercase; margin: 0 0 8px; }
+.commentary-text { font-size: 14px; line-height: 1.6; color: var(--ink-soft); margin: 0; }
+.pending-note { font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; color: var(--ink-soft); border: 1px dashed var(--line); padding: 10px 14px; display: inline-block; }
+
+.note-input {
+  width: 100%; font-family: 'Source Serif 4', serif; font-size: 15px; color: var(--ink);
+  background: var(--panel); border: 1px solid var(--line); border-radius: 4px; padding: 12px; resize: vertical;
+}
+.note-actions { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+.note-save-btn, .note-delete-btn {
+  -webkit-appearance: none; appearance: none; font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+  letter-spacing: 0.08em; text-transform: uppercase; padding: 10px 16px; border-radius: 4px; cursor: pointer; border: none;
+}
+.note-save-btn { background: var(--navy); color: var(--bg); }
+.note-delete-btn { background: transparent; color: var(--rust); border: 1px solid var(--rust); }
+.note-status { font-size: 12px; color: var(--ink-soft); }
+
+/* ---------- Notes list view ---------- */
+.notes-view { padding: 40px 0 60px; }
+.note-item { background: var(--panel); border: 1px solid var(--line); border-radius: 3px; padding: 16px 18px; margin-bottom: 14px; cursor: pointer; }
+.note-item-ref { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 19px; color: var(--navy-text); margin: 0 0 6px; }
+.note-item-text { font-size: 14.5px; color: var(--ink-soft); line-height: 1.55; margin: 0; }
+.notes-empty { color: var(--ink-soft); font-size: 14.5px; }
+
+.chapter-unavailable { padding: 50px 24px; text-align: center; border: 1px dashed var(--line); }
+.chapter-unavailable h2 { font-family: 'Cormorant Garamond', serif; color: var(--navy-text); }
+
+.site-footer { padding: 28px 0 60px; border-top: 1px solid var(--line); font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
