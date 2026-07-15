@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<title>İncil Şərhləri — Ayə-ayə Protestant Şərhi</title>
+
+<!-- Tema seçimini stil yüklənməzdən əvvəl tətbiq edir ki, səhifə "yanıb-sönməsin" -->
+<script>
+  (function () {
+    try {
+      var pref = localStorage.getItem('incil-tema') || 'ag';
+      document.documentElement.setAttribute('data-theme', pref);
+    } catch (e) {
+      document.documentElement.setAttribute('data-theme', 'ag');
+    }
+  })();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="frame">
+
+  <div class="toolbar">
+    <div class="toolbar-group">
+      <span class="toolbar-label">Şrift</span>
+      <button id="font-minus" title="Şrifti kiçilt" aria-label="Şrifti kiçilt">A−</button>
+      <button id="font-reset" title="Sıfırla" aria-label="Şrifti sıfırla">A</button>
+      <button id="font-plus" title="Şrifti böyüt" aria-label="Şrifti böyüt">A+</button>
+    </div>
+
+    <div class="appearance-wrap">
+      <button id="appearance-btn" class="appearance-btn" aria-haspopup="true" aria-expanded="false">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18Z" fill="currentColor" stroke="none"/></svg>
+        <span>Görünüş</span>
+      </button>
+      <div id="appearance-menu" class="appearance-menu hidden" role="menu">
+        <button class="appearance-opt" data-choice="ag" role="menuitem">
+          <span class="swatch swatch-ag"></span>Ağ
+        </button>
+        <button class="appearance-opt" data-choice="qara" role="menuitem">
+          <span class="swatch swatch-qara"></span>Tünd
+        </button>
+        <button class="appearance-opt" data-choice="krem" role="menuitem">
+          <span class="swatch swatch-krem"></span>Krem
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <header class="masthead">
+    <p class="eyebrow">Ayə-ayə şərh külliyyatı</p>
+    <h1 class="wordmark">İncil Şərhləri</h1>
+    <p class="tagline">İncili oxuyun, istənilən ayənin yanındakı işarəyə toxunun — Protestant ilahiyyatçılarının rəylərini görün, öz qeydinizi yazıb saxlayın.</p>
+    <nav class="view-tabs">
+      <button class="view-tab active" data-view="reader">Oxu</button>
+      <button class="view-tab" data-view="notes">Qeydlərim</button>
+    </nav>
+  </header>
+
+  <div class="content-shell">
+
+    <div class="reader-topbar">
+      <button id="picker-open-btn" class="picker-pill">
+        <span id="picker-pill-text">Kitab seçin</span>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <button id="search-open-btn" class="icon-btn" aria-label="Açar söz axtar">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      </button>
+    </div>
+
+    <main class="reader" id="reader">
+      <div id="continue-slot"></div>
+      <div class="empty-state" id="empty-state">
+        <h2>Başlamaq üçün bir fəsil seçin</h2>
+        <p>Yuxarıdakı <strong>"Kitab seçin"</strong> düyməsinə toxunun, ya da nümunə olaraq <button class="link-btn" id="demo-btn">Yaradılış 1</button> fəslinə baxın.</p>
+      </div>
+    </main>
+
+    <section class="notes-view hidden" id="notes-view">
+      <div class="chapter-head notes-head">
+        <div>
+          <p class="chapter-eyebrow">Şəxsi qeydlər</p>
+          <h2 class="chapter-title">Qeydlərim</h2>
+        </div>
+        <p class="notes-stats" id="notes-stats"></p>
+      </div>
+
+      <div class="notes-toolbar">
+        <input type="search" id="notes-search" class="notes-search" placeholder="Qeydlərinizdə axtarın…" aria-label="Qeydlərdə axtar">
+        <div class="notes-toolbar-actions">
+          <button id="notes-export" class="ghost-btn" title="Bütün qeydləri fayla köçür">Ehtiyat nüsxə al</button>
+          <label class="ghost-btn file-btn" title="Əvvəl saxlanmış ehtiyat nüsxəni bərpa et">
+            Bərpa et
+            <input type="file" id="notes-import" accept="application/json" hidden>
+          </label>
+        </div>
+      </div>
+
+      <div id="notes-list"></div>
+    </section>
+
+  </div>
+
+  <button class="float-nav float-nav-prev hidden" id="prev-chapter-btn" aria-label="Əvvəlki fəsil">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+  </button>
+  <button class="float-nav float-nav-next hidden" id="next-chapter-btn" aria-label="Növbəti fəsil">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+  </button>
+
+  <footer class="site-footer">
+    <p>Bu sayt inkişaf mərhələsindədir. Şərh mənbəyi: Matthew Henry (ictimai domenə aid, XVII–XVIII əsr Protestant təfsiri) — orijinaldan ana xəttə uyğun şəkildə xülasə edilib. Ayə mətnləri hələ qısa xülasə şəklindədir. Qeydləriniz yalnız bu cihazın brauzerində saxlanılır — "Ehtiyat nüsxə al" ilə vaxtaşırı yükləməyi tövsiyə edirik.</p>
+  </footer>
+
+</div>
+
+<!-- Kitab / Fəsil seçici -->
+<div class="modal-backdrop hidden" id="picker-backdrop">
+  <div class="modal picker-modal" role="dialog" aria-modal="true">
+    <div class="picker-modal-head">
+      <button id="picker-back-btn" class="picker-back hidden" aria-label="Geri">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+      </button>
+      <h3 id="picker-modal-title">Kitablar</h3>
+      <button id="picker-close-btn" class="modal-close" aria-label="Bağla">✕</button>
+    </div>
+    <div class="picker-order-toggle" id="book-order-toggle">
+      <button data-order="geleneksel" class="order-opt active">Ənənəvi</button>
+      <button data-order="alfabetik" class="order-opt">Əlifba sırası</button>
+    </div>
+    <div class="picker-modal-body" id="picker-modal-body"></div>
+  </div>
+</div>
+
+<!-- Açar söz axtarışı -->
+<div class="modal-backdrop hidden" id="search-backdrop">
+  <div class="modal search-modal" role="dialog" aria-modal="true">
+    <div class="picker-modal-head">
+      <h3>Açar söz axtarışı</h3>
+      <button id="search-close-btn" class="modal-close" aria-label="Bağla">✕</button>
+    </div>
+    <input type="search" id="global-search-input" class="notes-search search-modal-input" placeholder="Məsələn: Nuh, gəmi, işıq…" autocomplete="off">
+    <p id="global-search-status" class="tech-hint"></p>
+    <div id="global-search-results"></div>
+  </div>
+</div>
+
+<!-- Ayə pəncərəsi -->
+<div class="modal-backdrop hidden" id="modal-backdrop">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-ref">
+    <button class="modal-close" id="modal-close" aria-label="Bağla">✕</button>
+    <p class="modal-ref" id="modal-ref"></p>
+    <p class="modal-verse-text" id="modal-verse-text"></p>
+    <button class="copy-btn" id="copy-verse-btn" type="button">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="1.5"/><path d="M5 15V4.5A1.5 1.5 0 0 1 6.5 3H16"/></svg>
+      <span id="copy-verse-label">Ayəni kopyala</span>
+    </button>
+
+    <div class="modal-section">
+      <p class="modal-section-title">Protestant şərhçilərin rəyi</p>
+      <div id="modal-commentary"></div>
+    </div>
+
+    <div class="modal-section">
+      <p class="modal-section-title">Sizin qeydiniz</p>
+      <textarea id="note-input" class="note-input" placeholder="Bu ayə haqqında öz fikrinizi, sualınızı və ya qeydinizi yazın..." rows="4"></textarea>
+      <div class="note-actions">
+        <button id="note-save" class="note-save-btn">Qeydi saxla</button>
+        <button id="note-delete" class="note-delete-btn hidden">Sil</button>
+        <span id="note-status" class="note-status" role="status"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
